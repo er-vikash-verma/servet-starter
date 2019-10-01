@@ -1,8 +1,6 @@
 package com.servlet;
 
 import com.db.connection.*;
-import static java.rmi.server.LogStream.log;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -30,8 +28,24 @@ public class login {
             }
             con.close();
         } catch (Exception ex) {
-            log(ex.getMessage());
+
         }
         return Islogin;
+    }
+
+    public int RegisterUser(String firstName, String lastName, String emailId, String password, String DOB, String Gender, String Mobile) {
+        int IsInserted = 0;
+        String sql="";
+        try {
+            db = new dbConnection();
+            con = db.GetDbconnection();
+            stmt = (Statement) con.createStatement();
+            sql = "insert into login(UserName,Password,FirstName,LastName,Mobile,Gender,DOB) values('"+emailId+"','"+password+"','"+firstName+"','"+lastName+"','"+Mobile+"','1','"+DOB+"')";
+            IsInserted = stmt.executeUpdate(sql);
+            con.close();
+        } catch (Exception ex) {
+
+        }
+        return IsInserted;
     }
 }
